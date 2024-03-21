@@ -4,9 +4,9 @@
 // @version      0.1
 // @description  use side button to go to next page or manga site
 // @author       You
-// @match        https://www.colamanhua.com/*
+// @match        https://www.colamanga.com/*
 // @match        https://www.manhuagui.com/*
-// @icon         https://www.colamanhua.com/favicon.png
+// @icon         https://www.colamanga.com/favicon.png
 // @grant        none
 // ==/UserScript==
 
@@ -29,6 +29,16 @@
   }
 
   removeExistingEvent();
+
+
+  var scriptElements = document.querySelectorAll('script');
+  console.log('scriptElements', scriptElements);
+
+  scriptElements.forEach(script => {
+    var scriptContent = script.textContent;
+    scriptContent = scriptContent.replace('__cad.read_periodical();', '')
+    script.textContent = scriptContent;
+  });
 
   const mangaReader = (next=false) => {
     console.log(e);
@@ -63,11 +73,12 @@
                 nextBtn[0].click()
               }catch(e) {};
               break;
-            case 'www.colamanhua.com':
+            case 'www.colamanga.com':
               mangaReader(true);
               break;
           }
         }
     }
   });
+
 })();
